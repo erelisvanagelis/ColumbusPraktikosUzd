@@ -21,5 +21,35 @@ namespace ColumbusPraktikosUzd
 
             return string.Concat(reversed);
         }
+
+        public static int[] RandomisedArray(int length, int min, int max)
+        {
+            var randomiser = new Random();
+            var array = new int[length];
+            for(var i = 0; i < length; i++)
+            {
+                array[i] = randomiser.Next(min, max);
+            }
+            return array;
+        }
+
+        public static (int min, int max) FindMinMax(int[] array)
+        {
+            int min = array[0];
+            int max = array[0];
+            foreach(var number in array)
+            {
+                if(number < min)
+                {
+                    min = number;
+                }
+                else if(number > max)
+                {
+                    max = number;
+                }
+            }
+            
+            return (min, max);
+        }
     }
 }
