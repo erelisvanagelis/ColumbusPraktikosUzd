@@ -55,5 +55,61 @@ namespace ColumbusPraktikosUzdTest
             Assert.AreEqual(randomisedArray.Max(), max);
             Assert.AreEqual(randomisedArray.Min(), min);
         }
+
+        [Test]
+        public void CountOccurences()
+        {
+            var randomisedArray = Algorithms.RandomisedArray(100, 0, 50);
+            List<NumberCounter> numberCounters = Algorithms.CountOccurences(randomisedArray);
+
+            foreach(NumberCounter counter in numberCounters)
+            {
+                Console.WriteLine(counter.ToString());
+            }
+
+            Assert.LessOrEqual(numberCounters.Count, 50);
+        }
+
+        [Test]
+        public void CountOccurences_7_8_9()
+        {
+            var simpleArray = new int[] { 7, 8, 9 };
+
+            List<NumberCounter> numberCounters = Algorithms.CountOccurences(simpleArray);
+
+            Assert.AreEqual(numberCounters.Count, simpleArray.Length);
+        }
+
+        [Test]
+        public void CountOccurences_7_7_7()
+        {
+            var simpleArray = new int[] { 7, 7, 7 };
+
+            List<NumberCounter> numberCounters = Algorithms.CountOccurences(simpleArray);
+
+            Assert.AreEqual(numberCounters.Count, 1);
+            Assert.AreEqual(numberCounters[0].Number, 7);
+            Assert.AreEqual(numberCounters[0].Count, 3);
+        }
+
+        [Test]
+        public void GetReouccuring()
+        {
+            var randomisedArray = Algorithms.RandomisedArray(100, 0, 50);
+            List<NumberCounter> numberCounters = Algorithms.GetReoccuring(randomisedArray);
+
+            Assert.AreEqual(numberCounters.Find(x => x.Count == 1), null);
+        }
+
+        [Test]
+        public void CountOccurencesShort()
+        {
+            var simpleArray = new int[] { 7, 7, 7 };
+
+            List<NumberCounterBase> numberCounters = Algorithms.CountOccurencesShort(simpleArray);
+
+            Console.WriteLine(numberCounters[0].ToString());
+            Assert.AreEqual(numberCounters[0].Count, 3);
+        }
     }
 }

@@ -51,5 +51,43 @@ namespace ColumbusPraktikosUzd
             
             return (min, max);
         }
+
+        public static List<NumberCounter> CountOccurences(int[] array)
+        {
+            var counters = new List<NumberCounter>();
+            for(var i = 0; i < array.Length; i++)
+            {
+                var counter = counters.Find(x => x.Number == array[i]);
+
+                if (counter is null)
+                {
+                    counters.Add(new NumberCounter(array[i], i));
+                } else
+                {
+                    counter.AddIndex(i);
+                }
+            }
+
+            return counters;
+        }
+
+        public static List<NumberCounterBase> CountOccurencesShort(int[] array)
+        {
+            var counters = new List<NumberCounterBase>();
+            var unique = array.Distinct();
+            foreach(var number in unique)
+            {
+                var count = array.Count(x => x == number);
+                counters.Add(new NumberCounterBase(number, count));
+            }
+
+            return counters;
+        }
+
+        public static List<NumberCounter> GetReoccuring(int[] array)
+        {
+            var counters = CountOccurences(array);
+            return counters.Where(x => x.Count > 1).ToList();
+        }
     }
 }
