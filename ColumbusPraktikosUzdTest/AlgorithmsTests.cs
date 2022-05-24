@@ -1,4 +1,4 @@
-using ColumbusPraktikosUzd;
+﻿using ColumbusPraktikosUzd;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -77,7 +77,7 @@ namespace ColumbusPraktikosUzdTest
 
             List<NumberCounter> numberCounters = Algorithms.CountOccurences(simpleArray);
 
-            Assert.AreEqual(numberCounters.Count, simpleArray.Length);
+            Assert.AreEqual(3, numberCounters.Count);
         }
 
         [Test]
@@ -87,9 +87,9 @@ namespace ColumbusPraktikosUzdTest
 
             List<NumberCounter> numberCounters = Algorithms.CountOccurences(simpleArray);
 
-            Assert.AreEqual(numberCounters.Count, 1);
-            Assert.AreEqual(numberCounters[0].Number, 7);
-            Assert.AreEqual(numberCounters[0].Count, 3);
+            Assert.AreEqual(1, numberCounters.Count);
+            Assert.AreEqual(7, numberCounters[0].Number);
+            Assert.AreEqual(3, numberCounters[0].Count);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace ColumbusPraktikosUzdTest
             var randomisedArray = Algorithms.RandomisedArray(100, 0, 50);
             List<NumberCounter> numberCounters = Algorithms.GetReoccuring(randomisedArray);
 
-            Assert.AreEqual(numberCounters.Find(x => x.Count == 1), null);
+            Assert.AreEqual(null, numberCounters.Find(x => x.Count == 1));
         }
 
         [Test]
@@ -109,7 +109,56 @@ namespace ColumbusPraktikosUzdTest
             List<NumberCounterBase> numberCounters = Algorithms.CountOccurencesShort(simpleArray);
 
             Console.WriteLine(numberCounters[0].ToString());
-            Assert.AreEqual(numberCounters[0].Count, 3);
+            Assert.AreEqual(3, numberCounters[0].Count);
+        }
+
+        [Test]
+        public void VowelConsonantCounter()
+        {
+            var text = "Programuotojo ar tiesiog bet kokio IT specialisto profesija taps vis labiau įprasta.";
+            (int vowels, int consonants) = Algorithms.VowelConsonantCounter(Language.Lithuanian, text);
+
+            Console.WriteLine(vowels);
+            Console.WriteLine(consonants);
+
+            Assert.AreEqual(34, vowels);
+            Assert.AreEqual(38, consonants);
+        }
+
+        [Test]
+        public void VowelConsonantCounter_ltAlphabetVowels_24()
+        {
+            var text = "Aa Ąa Ee Ęę Ėė Ii Įį Yy Oo Uu Ųų Ūū";
+            (int vowels, int consonants) = Algorithms.VowelConsonantCounter(Language.Lithuanian, text);
+
+            Assert.AreEqual(24, vowels);
+            Assert.AreEqual(0, consonants);
+        }
+
+        [Test]
+        public void VowelConsonantCounter_ltAlphabetConsonants_40()
+        {
+            var text = "Bb Cc Čč Dd Ff Gg Hh Jj Kk Ll Mm Nn Pp Rr Ss Šš Tt Vv Zz Žž";
+            (int vowels, int consonants) = Algorithms.VowelConsonantCounter(Language.Lithuanian, text);
+
+            Assert.AreEqual(40, consonants);
+            Assert.AreEqual(0, vowels);
+        }
+
+        [Test]
+        public void VowelConsonantCounter_ltAlphabet_56()
+        {
+            var text = "Aa Ąa Ee Ęę Ėė Ii Įį Yy Oo Uu Ųų Ūū Bb Cc Čč Dd Ff Gg Hh Jj Kk Ll Mm Nn Pp Rr Ss Šš Tt Vv Zz Žž";
+            (int vowels, int consonants) = Algorithms.VowelConsonantCounter(Language.Lithuanian, text);
+
+            Assert.AreEqual(24, vowels);
+            Assert.AreEqual(40, consonants);
+        }
+
+        [Test]
+        public void VowelConsonantCounter_English_NotImplementedException()
+        {
+            Assert.Throws<NotImplementedException>(() => Algorithms.VowelConsonantCounter(Language.English, "trta"));
         }
     }
 }

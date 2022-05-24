@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace ColumbusPraktikosUzd
 {
+    public enum Language
+    {
+        Lithuanian,
+        English
+    }
+
     public class Algorithms
     {
         public static string ReverseStringShort(string text) => string.Concat(text.Reverse());
@@ -88,6 +94,46 @@ namespace ColumbusPraktikosUzd
         {
             var counters = CountOccurences(array);
             return counters.Where(x => x.Count > 1).ToList();
+        }
+
+        public static (int vowels, int consonants) VowelConsonantCounter(Language language, string text)
+        {
+            int vowels = 0, consonants = 0;
+            switch (language)
+            {
+                case Language.Lithuanian:
+                    char[] LithuanianVovels = new char[] { 'a', 'ą', 'e', 'ę', 'ė', 'i', 'į', 'y', 'o', 'u', 'ų', 'ū' };
+                    char[] LithuanianConsonants = new char[] { 'b', 'c', 'č', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 'š', 't', 'v', 'z', 'ž' };
+
+                    (vowels, consonants) = VowelConsonantCounter(text, LithuanianVovels, LithuanianConsonants);
+
+                    break;
+
+                default:
+                    throw new NotImplementedException("Language was not implemented");
+            }
+
+            return (vowels, consonants);
+        }
+
+        public static (int vowels, int consonants) VowelConsonantCounter(string text, char[] vowels, char[] consonants)
+        {
+            int vowelCount = 0, consonantCount = 0;
+
+            text = text.ToLower();
+            foreach(var letter in text)
+            {
+                if (vowels.Contains(letter))
+                {
+                    vowelCount++;
+                }
+                else if (consonants.Contains(letter))
+                {
+                    consonantCount++;
+                }
+            }
+
+            return (vowelCount, consonantCount);
         }
     }
 }
