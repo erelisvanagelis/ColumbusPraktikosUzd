@@ -58,7 +58,7 @@ namespace ColumbusPraktikosUzd
             return (min, max);
         }
 
-        public static List<NumberCounter> CountOccurences(int[] array)
+        public static NumberCounter[] CountOccurences(int[] array)
         {
             var counters = new List<NumberCounter>();
             for(var i = 0; i < array.Length; i++)
@@ -74,10 +74,10 @@ namespace ColumbusPraktikosUzd
                 }
             }
 
-            return counters;
+            return counters.ToArray();
         }
 
-        public static List<NumberCounterBase> CountOccurencesShort(int[] array)
+        public static NumberCounterBase[] CountOccurencesShort(int[] array)
         {
             var counters = new List<NumberCounterBase>();
             var unique = array.Distinct();
@@ -87,13 +87,12 @@ namespace ColumbusPraktikosUzd
                 counters.Add(new NumberCounterBase(number, count));
             }
 
-            return counters;
+            return counters.ToArray();
         }
 
-        public static List<NumberCounter> GetReoccuring(int[] array)
+        public static NumberCounterBase[] GetReoccuring(NumberCounterBase[] counters)
         {
-            var counters = CountOccurences(array);
-            return counters.Where(x => x.Count > 1).ToList();
+            return counters.Where(x => x.Count > 1).ToArray();
         }
 
         public static (int vowels, int consonants) VowelConsonantCounter(Language language, string text)

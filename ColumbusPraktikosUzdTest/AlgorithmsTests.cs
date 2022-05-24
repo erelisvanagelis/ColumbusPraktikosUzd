@@ -60,14 +60,14 @@ namespace ColumbusPraktikosUzdTest
         public void CountOccurences()
         {
             var randomisedArray = Algorithms.RandomisedArray(100, 0, 50);
-            List<NumberCounter> numberCounters = Algorithms.CountOccurences(randomisedArray);
+            var numberCounters = Algorithms.CountOccurences(randomisedArray);
 
             foreach(NumberCounter counter in numberCounters)
             {
                 Console.WriteLine(counter.ToString());
             }
 
-            Assert.LessOrEqual(numberCounters.Count, 50);
+            Assert.LessOrEqual(numberCounters.Length, 50);
         }
 
         [Test]
@@ -75,9 +75,9 @@ namespace ColumbusPraktikosUzdTest
         {
             var simpleArray = new int[] { 7, 8, 9 };
 
-            List<NumberCounter> numberCounters = Algorithms.CountOccurences(simpleArray);
+            var numberCounters = Algorithms.CountOccurences(simpleArray);
 
-            Assert.AreEqual(3, numberCounters.Count);
+            Assert.AreEqual(3, numberCounters.Length);
         }
 
         [Test]
@@ -85,9 +85,9 @@ namespace ColumbusPraktikosUzdTest
         {
             var simpleArray = new int[] { 7, 7, 7 };
 
-            List<NumberCounter> numberCounters = Algorithms.CountOccurences(simpleArray);
+            var numberCounters = Algorithms.CountOccurences(simpleArray);
 
-            Assert.AreEqual(1, numberCounters.Count);
+            Assert.AreEqual(1, numberCounters.Length);
             Assert.AreEqual(7, numberCounters[0].Number);
             Assert.AreEqual(3, numberCounters[0].Count);
         }
@@ -96,9 +96,10 @@ namespace ColumbusPraktikosUzdTest
         public void GetReouccuring()
         {
             var randomisedArray = Algorithms.RandomisedArray(100, 0, 50);
-            List<NumberCounter> numberCounters = Algorithms.GetReoccuring(randomisedArray);
+            var allCounters = Algorithms.CountOccurences(randomisedArray);
+            var reocurringCounters = Algorithms.GetReoccuring(allCounters);
 
-            Assert.AreEqual(null, numberCounters.Find(x => x.Count == 1));
+            Assert.Throws<InvalidOperationException>(() => reocurringCounters.First(x => x.Count == 1));
         }
 
         [Test]
@@ -106,7 +107,7 @@ namespace ColumbusPraktikosUzdTest
         {
             var simpleArray = new int[] { 7, 7, 7 };
 
-            List<NumberCounterBase> numberCounters = Algorithms.CountOccurencesShort(simpleArray);
+            var numberCounters = Algorithms.CountOccurencesShort(simpleArray);
 
             Console.WriteLine(numberCounters[0].ToString());
             Assert.AreEqual(3, numberCounters[0].Count);

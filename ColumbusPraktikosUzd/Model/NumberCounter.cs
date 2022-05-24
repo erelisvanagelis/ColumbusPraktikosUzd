@@ -31,5 +31,15 @@ namespace ColumbusPraktikosUzd
             indexes.Add(index);
             count++;
         }
+
+        public override string ToString()
+        {
+            var text = $"{{ {string.Join(", ", indexes)} }}";
+            return $"{{\n" +
+                $"number: {Number}, \n" +
+                $"count: {Count}, \n" +
+                $"indexes: {text}, \n" +
+                $"}}";
+        }
     }
 }
